@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "Flip Coin Combination:"
+declare -A AllCombination
 
 declare -A Singlet=( [H]=0 [T]=0 )
 flipnum=40
@@ -18,6 +19,7 @@ echo "Percentage of Singlet Combination are: "
 for key in ${!Singlet[@]}
 do
 	Singlet[$key]=`printf %.2f "$(( (${Singlet[$key]})*100*100/$flipnum ))e-2"`
+	AllCombination[$key]=${Singlet[$key]}
 	echo "$key : ${Singlet[$key]}"
 done
 
@@ -42,7 +44,8 @@ echo "Percentage of Doublet Combination are: "
 for key in ${!Doublet[@]}
 do
    Doublet[$key]=`printf %.2f "$(( (${Doublet[$key]})*100*100/$flipnum ))e-2"`
-   echo "$key : ${Doublet[$key]}"
+   AllCombination[$key]=${Doublet[$key]}
+	echo "$key : ${Doublet[$key]}"
 done
 
 declare -A Triplet=( [HHH]=0 [HHT]=0 [HTH]=0 [HTT]=0 [THH]=0 [THT]=0 [TTH]=0 [TTT]=0)
@@ -73,5 +76,21 @@ echo "Percentage of Triplet Combination are: "
 for key in ${!Triplet[@]}
 do
    Triplet[$key]=`printf %.2f "$(( (${Triplet[$key]})*100*100/$flipnum ))e-2"`
+	AllCombination[$key]=${Triplet[$key]}
    echo "$key : ${Triplet[$key]}"
 done
+
+echo "ALL COMBINATIONS SORTED DATA :"
+for key in ${!AllCombination[@]}
+do
+   echo "$key : ${AllCombination[$key]}"
+done | sort -nr -k3
+
+echo "The Winning Combination is :"
+
+for key in ${!AllCombination[@]}
+do
+   echo "$key : ${AllCombination[$key]}"
+done | sort -nr -k3 | head -1
+
+
