@@ -44,3 +44,34 @@ do
    Doublet[$key]=`printf %.2f "$(( (${Doublet[$key]})*100*100/$flipnum ))e-2"`
    echo "$key : ${Doublet[$key]}"
 done
+
+declare -A Triplet=( [HHH]=0 [HHT]=0 [HTH]=0 [HTT]=0 [THH]=0 [THT]=0 [TTH]=0 [TTT]=0)
+
+for((i=0; i<$flipnum; i++))
+do
+   coin=$((RANDOM%8))
+   case $coin in
+      0)
+         ((Triplet[HHH]++)) ;;
+      1)
+         ((Triplet[HHT]++)) ;;
+      2)
+         ((Triplet[HTH]++)) ;;
+      3)
+         ((Triplet[HTT]++)) ;;
+      4)
+         ((Triplet[THH]++)) ;;
+      5)
+         ((Triplet[THT]++)) ;;
+      6)
+         ((Triplet[TTH]++)) ;;
+      7)
+         ((Triplet[TTT]++)) ;;
+   esac
+done
+echo "Percentage of Triplet Combination are: "
+for key in ${!Triplet[@]}
+do
+   Triplet[$key]=`printf %.2f "$(( (${Triplet[$key]})*100*100/$flipnum ))e-2"`
+   echo "$key : ${Triplet[$key]}"
+done
